@@ -10,4 +10,6 @@ public interface IDepartamentoService
     Departamento New(Departamento departamento);
 
     List<Departamento> FindList();
+
+    
 }

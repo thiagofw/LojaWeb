@@ -11,4 +11,6 @@ public interface IVendedorService
 
      void Remove(int id);
 
+     void Update(Vendedor vendedor);
+
 }

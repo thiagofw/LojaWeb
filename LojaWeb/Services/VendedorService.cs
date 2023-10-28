@@ -1,7 +1,10 @@
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using LojaWeb.Data;
 using LojaWeb.Models;
+using LojaWeb.Services.Exceptions;
 using LojaWeb.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace LojaWeb.Services;
@@ -53,12 +56,27 @@ public class VendedorService : IVendedorService
 
     public Vendedor FindById(int id)
     {
-        return _vsproContext.Vendedor.FirstOrDefault(x => x.Id == id);
+        //return _vsproContext.Vendedor.FirstOrDefault(x => x.Id == id);
+        return _vsproContext.Vendedor.Include(obj =>obj.Departamento).FirstOrDefault(x => x.Id == id);
 
     }
     public void Remove(int id){
         var obj = _vsproContext.Vendedor.Find(id);
         _vsproContext.Remove(obj);
         _vsproContext.SaveChanges();
+    }
+    public void Update(Vendedor vendedor)
+    {
+        if(!_vsproContext.Vendedor.Any(x =>x.Id == vendedor.Id))
+        {
+            throw new NotFoundException("Vendedor não encontrado. Verifique as informações!");
+        }
+        try{
+        _vsproContext.Update(vendedor);
+        _vsproContext.SaveChanges();
+        }catch(DbUpdateConcurrencyException e)
+        {
+            throw new DbConcurrencyException(e.Message);
+        }
     }
 }

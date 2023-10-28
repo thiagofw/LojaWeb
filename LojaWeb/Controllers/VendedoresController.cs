@@ -36,13 +36,11 @@ public class VendedoresController: Controller
     [HttpPost]
     public IActionResult New(Vendedor vendedor)
     {
-      //  if(ModelState.IsValid)
-      //  {
-            _vendedorService.New(vendedor);
+      
+          _vendedorService.New(vendedor);
             _logger.LogInformation("Numero de itens: {0}", vendedor);
             return RedirectToAction("Index");
-      //  }
-     //   return View(vendedorDTO);
+       // return View(vendedor);
     }
     public IActionResult FindById(int id)
     {
@@ -69,4 +67,37 @@ public class VendedoresController: Controller
        return RedirectToAction("Index");
        
     }
+    public IActionResult Details(int? id)
+    {
+        if(id == null){
+            return NotFound();
+        }
+        var obj = _vendedorService.FindById(id.Value);
+        if(obj == null)
+        {
+            return NotFound();
+        }
+        return View(obj);
+    }
+    public IActionResult Edit(int? id)
+    {
+       if(id == null){
+            return NotFound();
+        }
+        var obj = _vendedorService.FindById(id.Value);
+        if(obj == null)
+        {
+            return NotFound();
+        }
+        
+        var list = _departamentoService.FindList();
+        VendedorFormViewModel viewModel = new VendedorFormViewModel{
+            Vendedor = obj,
+            Departamentos = list
+        };
+
+
+        return View(viewModel);
+    }
+
 }
