@@ -1,6 +1,5 @@
 using System.Collections;
 using LojaWeb.Data;
-using LojaWeb.DTOs;
 using LojaWeb.Models;
 using LojaWeb.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +14,16 @@ public class DepartamentoService : IDepartamentoService
     {
         _vsproContext = vsproContext;
     }
+    public List<Departamento> FindList()
+    {
+        return _vsproContext.Departamento.OrderBy(x => x.Nome).ToList();
+
+    }
     public IEnumerable FindAll()
     {
         var list = _vsproContext.Departamento;
-        var departamentoDTO = new List<DepartamentoDTO>();
-        departamentoDTO = list.Select(x => new DepartamentoDTO(
+        var departamentoDTO = new List<Departamento>();
+        departamentoDTO = list.Select(x => new Departamento(
             x.Id,
             x.Nome
           
@@ -31,8 +35,8 @@ public class DepartamentoService : IDepartamentoService
     {
        
         var list = _vsproContext.Departamento;
-        var departamentoDto = new List<DepartamentoDTO>();
-        departamentoDto = list.Where(m => m.Id == id).Select(x => new DepartamentoDTO(
+        var departamentoDto = new List<Departamento>();
+        departamentoDto = list.Where(m => m.Id == id).Select(x => new Departamento(
             x.Id,
             x.Nome
         )).ToList();
@@ -40,7 +44,7 @@ public class DepartamentoService : IDepartamentoService
         return departamentoDto;
     }
 
-    public DepartamentoDTO New(DepartamentoDTO departamento)
+    public Departamento New(Departamento departamento)
     {
        
         var novo = new Departamento{
@@ -50,8 +54,9 @@ public class DepartamentoService : IDepartamentoService
         };
         _vsproContext.Departamento.Add(novo);
         _vsproContext.SaveChanges();
-        var novoDepartamentoDTO = new DepartamentoDTO(novo.Id, novo.Nome);
-        return novoDepartamentoDTO;
+        var novoDepartamento = new Departamento(novo.Id, novo.Nome);
+        return novoDepartamento;
 
     }
 }
+    

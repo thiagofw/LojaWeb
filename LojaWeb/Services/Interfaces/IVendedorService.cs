@@ -1,10 +1,10 @@
 using System.Collections;
-using LojaWeb.DTOs;
+using LojaWeb.Models;
 
 namespace LojaWeb.Services.Interfaces;
 
 public interface IVendedorService
 {
      IEnumerable FindAll();
-     VendedorDTO New(VendedorDTO vendedorDTO);
+     Vendedor New(Vendedor vendedor);
 }

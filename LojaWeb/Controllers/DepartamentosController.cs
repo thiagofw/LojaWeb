@@ -1,5 +1,5 @@
 using System.Reflection.Metadata.Ecma335;
-using LojaWeb.DTOs;
+using LojaWeb.Models;
 using LojaWeb.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,13 +31,13 @@ public class DepartamentosController: Controller
         return View();
     }
     [HttpPost]
-    public IActionResult New(DepartamentoDTO departamentoDTO)
+    public IActionResult New(Departamento departamento)
     {
         if(ModelState.IsValid){
-            _departamentoService.New(departamentoDTO);
+            _departamentoService.New(departamento);
             return RedirectToAction("Index");
         }
-        return View(departamentoDTO);
+        return View(departamento);
     }
     
 

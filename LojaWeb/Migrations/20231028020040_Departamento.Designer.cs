@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LojaWeb.Migrations
 {
     [DbContext(typeof(VsproContext))]
-    [Migration("20231027165459_Departamento")]
+    [Migration("20231028020040_Departamento")]
     partial class Departamento
     {
         /// <inheritdoc />

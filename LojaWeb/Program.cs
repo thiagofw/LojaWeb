@@ -16,11 +16,11 @@ builder.Services.AddTransient<IVendedorService, VendedorService>();
 var app = builder.Build();
 //Injeção SeedingService
 //Used for seeding database
-/*using (var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     SeedingService.Initialize(services);
-}*/
+}
 //Injeção Serviços
 
 

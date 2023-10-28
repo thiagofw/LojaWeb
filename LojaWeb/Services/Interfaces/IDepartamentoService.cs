@@ -1,5 +1,5 @@
 using System.Collections;
-using LojaWeb.DTOs;
+using LojaWeb.Models;
 
 namespace LojaWeb.Services.Interfaces;
 public interface IDepartamentoService
@@ -7,5 +7,7 @@ public interface IDepartamentoService
 
     IEnumerable FindAll();
     IEnumerable FindBy(int id);
-    DepartamentoDTO New(DepartamentoDTO departamento);
+    Departamento New(Departamento departamento);
+
+    List<Departamento> FindList();
 }

@@ -1,6 +1,5 @@
 using System.Collections;
 using LojaWeb.Data;
-using LojaWeb.DTOs;
 using LojaWeb.Models;
 using LojaWeb.Services.Interfaces;
 
@@ -19,8 +18,8 @@ public class VendedorService : IVendedorService
     public IEnumerable FindAll()
     {
         var list = _vsproContext.Vendedor;
-        var vendedorDto = new List<VendedorDTO>();
-        vendedorDto = list.Select(x => new VendedorDTO(
+        var vendedorDto = new List<Vendedor>();
+        vendedorDto = list.Select(x => new Vendedor(
             x.Id,
             x.Nome,
             x.Email,
@@ -31,22 +30,24 @@ public class VendedorService : IVendedorService
         return vendedorDto;
     }
 
-    public VendedorDTO New(VendedorDTO vendedorDTO)
+    public Vendedor New(Vendedor vendedor)
     {
+       // vendedorDTO.Departamento = _vsproContext.Departamento.First();
         // Teste Departamento
         //  Departamento d1 = new Departamento(100, "Computer");
         var novo = new Vendedor{
 
-            Nome = vendedorDTO.Nome,
-            Email = vendedorDTO.Email,
-            Nascimento = vendedorDTO.Nascimento,
-            Salario = vendedorDTO.Salario,
-            Departamento = vendedorDTO.Departamento
+           
+            Nome = vendedor.Nome,
+            Email = vendedor.Email,
+            Nascimento = vendedor.Nascimento,
+            Salario = vendedor.Salario,
+            DepartamentoId = vendedor.DepartamentoId
 
         };
         _vsproContext.Vendedor.Add(novo);
         _vsproContext.SaveChanges();
-        var novoVendedor = new VendedorDTO(vendedorDTO.Id ,vendedorDTO.Nome, vendedorDTO.Email, vendedorDTO.Nascimento, vendedorDTO.Salario, vendedorDTO.Departamento);
-        return vendedorDTO;
+       // var novoVendedor = new VendedorDTO(vendedorDTO.Id ,vendedorDTO.Nome, vendedorDTO.Email, vendedorDTO.Nascimento, vendedorDTO.Salario, vendedorDTO.DepartamentoId);
+        return vendedor;
     }
 }
