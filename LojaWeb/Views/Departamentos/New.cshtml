@@ -1,0 +1,50 @@
+@model LojaWeb.DTOs.DepartamentoDTO
+
+@{
+    ViewData["Title"] = "Create Cliente";
+}
+
+<h2>Dashboard/Novo Cliente</h2>
+
+    <div class="mt-4">
+         <a asp-action="New" class="btn btn-primary">New</a>
+        <a asp-action="Index" class="btn btn-secondary">Logs</a>
+    </div>
+<div class="row">
+<div class="col-md-12">
+ <br>
+ <div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header text-center bg-dark text-white">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+          <h5>Novo CLiente</h5>
+          </div>
+          </div>
+          </div>
+     <div class="card mt-4">
+        <div class="card-header">
+         Informações::
+     </div>
+
+           <div class="card-body">
+            <div class="row">
+<form asp-controller="Departamentos" asp-action="New" method="post">
+   
+    <div class="row">
+    <div class="col">
+       <label asp-for="Nome"></label>
+        <input asp-for="Nome" class="form-control input-sm" />
+    </div>
+    
+   
+
+   
+    <div class="mt-4">
+    <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+</form>
+</div>
+</div>

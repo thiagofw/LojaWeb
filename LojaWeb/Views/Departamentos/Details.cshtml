@@ -1,0 +1,35 @@
+@model IEnumerable<LojaWeb.DTOs.DepartamentoDTO>
+
+@{
+    ViewData["Title"] = "Detalhes ";
+}
+
+<div class="container">
+    <h1 class="my-4">Detalhes do Departamento</h1>
+
+    <div class="card">
+        <div class="card-header">
+            Informações do Departamento
+        </div>
+        <div class="card-body">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-6">
+                        <h4>@item.Nome</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">ID: @item.Id</li>
+                            <li class="list-group-item">Nome: @item.Nome</li>
+                           
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.FirstOrDefault()?.Id" class="btn btn-primary">Alterar</a>
+        <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+    </div>
+</div>
