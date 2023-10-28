@@ -7,4 +7,8 @@ public interface IVendedorService
 {
      IEnumerable FindAll();
      Vendedor New(Vendedor vendedor);
+     Vendedor FindById(int id);
+
+     void Remove(int id);
+
 }

@@ -50,4 +50,15 @@ public class VendedorService : IVendedorService
        // var novoVendedor = new VendedorDTO(vendedorDTO.Id ,vendedorDTO.Nome, vendedorDTO.Email, vendedorDTO.Nascimento, vendedorDTO.Salario, vendedorDTO.DepartamentoId);
         return vendedor;
     }
+
+    public Vendedor FindById(int id)
+    {
+        return _vsproContext.Vendedor.FirstOrDefault(x => x.Id == id);
+
+    }
+    public void Remove(int id){
+        var obj = _vsproContext.Vendedor.Find(id);
+        _vsproContext.Remove(obj);
+        _vsproContext.SaveChanges();
+    }
 }
