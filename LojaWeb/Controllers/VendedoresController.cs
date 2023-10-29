@@ -38,8 +38,15 @@ public class VendedoresController: Controller
 
     [HttpPost]
     public IActionResult New(Vendedor vendedor)
-    {
-      
+    {//y
+            if(!ModelState.IsValid){
+                var list = _departamentoService.FindList();
+                VendedorFormViewModel viewModel = new VendedorFormViewModel{
+                Vendedor = vendedor,
+                Departamentos = list
+                 };
+             return View(viewModel);
+            }
           _vendedorService.New(vendedor);
             _logger.LogInformation("Numero de itens: {0}", vendedor);
             return RedirectToAction("Index");
@@ -66,6 +73,9 @@ public class VendedoresController: Controller
     [HttpPost]
     public IActionResult Delete(int id)
     {
+         if(!ModelState.IsValid){
+                return View(id);
+            }
        _vendedorService.Remove(id);
        return RedirectToAction("Index");
        
@@ -104,10 +114,14 @@ public class VendedoresController: Controller
         [HttpPost]
         public IActionResult Edit(int id, Vendedor vendedor)
         {
-            if(id != vendedor.Id)
-            {
-                return BadRequest();
-            }
+           if(!ModelState.IsValid){
+                var list = _departamentoService.FindList();
+                VendedorFormViewModel viewModel = new VendedorFormViewModel{
+                Vendedor = vendedor,
+                Departamentos = list
+                 };
+             return View(viewModel);
+           }
             try{
             _vendedorService.Update(vendedor);
             return RedirectToAction(nameof(Index));

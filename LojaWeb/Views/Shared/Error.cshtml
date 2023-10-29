@@ -1,26 +1,26 @@
 ﻿@model LojaWeb.Models.ViewModels.ErrorViewModel
 @{
-    ViewData["Title"] = "Error";
+    ViewData["Title"] = "Erro";
 }
 
-
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<h1 class="text-danger"> Erro 404 Não Encontrado! </h1>
+<h2 class="text-danger">Erro na solicitação </h2>
+<h2 class="text-danger">Um erro ocorreu enquanto o servidor processava a sua solicitação.</h2>
 
 @if (Model.ShowRequestId)
 {
     <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+        <strong>ID Erro:</strong> <code>@Model.RequestId</code>
     </p>
      <p>
-        <strong>Request ID:</strong> <code>@Model.Message</code>
+        <strong>Mensagem de erro:</strong> <code>@Model.Message</code>
     </p>
 }
-}
 
-<h3>Development Mode</h3>
+
+<h3>Aviso</h3>
 <p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+    O sistema esta no modo  <strong>DESENVOLVIMENTO</strong> , é muito importante realizar as alterações nos arquivos antes de iniciar o processo de produção.
 </p>
 <p>
     <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
