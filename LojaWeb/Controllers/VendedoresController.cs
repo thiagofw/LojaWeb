@@ -1,8 +1,11 @@
 
 using LojaWeb.Models;
 using LojaWeb.Models.ViewModels;
+using LojaWeb.Services.Exceptions;
 using LojaWeb.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
+using System.Diagnostics;
 
 namespace LojaWeb.Controllers;
 
@@ -40,7 +43,7 @@ public class VendedoresController: Controller
           _vendedorService.New(vendedor);
             _logger.LogInformation("Numero de itens: {0}", vendedor);
             return RedirectToAction("Index");
-       // return View(vendedor);
+       
     }
     public IActionResult FindById(int id)
     {
@@ -51,12 +54,12 @@ public class VendedoresController: Controller
     {
         if(id == null)
         {
-            return NotFound();
+            return RedirectToAction(nameof(Error), new {message = "Id não Fornecido. O id está correto?"});
 
         }
         var obj = _vendedorService.FindById(id.Value);
         if(obj == null){
-            return NotFound();
+            return RedirectToAction(nameof(Error), new {message = "Id não encontrado"});
         }
         return View(obj);
     }
@@ -70,24 +73,25 @@ public class VendedoresController: Controller
     public IActionResult Details(int? id)
     {
         if(id == null){
-            return NotFound();
+            return RedirectToAction(nameof(Error), new {message = "Id não Fornecido. O id está correto?"});
         }
         var obj = _vendedorService.FindById(id.Value);
         if(obj == null)
         {
-            return NotFound();
+             return RedirectToAction(nameof(Error), new {message = "Id não encontrado"});
         }
         return View(obj);
     }
+    [HttpGet]
     public IActionResult Edit(int? id)
     {
        if(id == null){
-            return NotFound();
+             return RedirectToAction(nameof(Error), new {message = "Id não encontrado"});
         }
         var obj = _vendedorService.FindById(id.Value);
         if(obj == null)
         {
-            return NotFound();
+             return RedirectToAction(nameof(Error), new {message = "Id não encontrado"});
         }
         
         var list = _departamentoService.FindList();
@@ -95,9 +99,39 @@ public class VendedoresController: Controller
             Vendedor = obj,
             Departamentos = list
         };
-
-
         return View(viewModel);
     }
+        [HttpPost]
+        public IActionResult Edit(int id, Vendedor vendedor)
+        {
+            if(id != vendedor.Id)
+            {
+                return BadRequest();
+            }
+            try{
+            _vendedorService.Update(vendedor);
+            return RedirectToAction(nameof(Index));
+            }
+            catch(NotFoundException e)
+            {
+               return View(e.Message);
+            }
+            catch(DBConcurrencyException e)
+            {
+                return View(e.Message);
+            }
+        }
+        
+        public IActionResult Error(string message)
+        {
+              //throw new NotFoundException("Vendedor não encontrado. Verifique as informações!");
+             // var viewModel = new ErrorViewModel{
+             //   Message = message,
+             //   RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            //  };
+            var viewModel = _vendedorService.Error(message);
 
+              return View(viewModel);
+        }
+      
 }

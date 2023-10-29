@@ -2,20 +2,22 @@ using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using LojaWeb.Data;
 using LojaWeb.Models;
+using LojaWeb.Models.ViewModels;
 using LojaWeb.Services.Exceptions;
 using LojaWeb.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
+using System.Diagnostics;
 
 namespace LojaWeb.Services;
 
 public class VendedorService : IVendedorService
 {
     private readonly VsproContext _vsproContext;
-
-    public VendedorService(VsproContext vsproContext)
+    private readonly ILogger<VendedorService> _logger;
+    public VendedorService(VsproContext vsproContext, ILogger<VendedorService> logger)
     {
         _vsproContext = vsproContext;
+        _logger = logger;
     }
   
     public IEnumerable FindAll()
@@ -69,6 +71,7 @@ public class VendedorService : IVendedorService
     {
         if(!_vsproContext.Vendedor.Any(x =>x.Id == vendedor.Id))
         {
+              _logger.LogInformation("xvendedor ", vendedor.Id);
             throw new NotFoundException("Vendedor não encontrado. Verifique as informações!");
         }
         try{
@@ -78,5 +81,15 @@ public class VendedorService : IVendedorService
         {
             throw new DbConcurrencyException(e.Message);
         }
+    }
+
+    
+    public ErrorViewModel Error(string message)
+    {
+        var viewModel = new ErrorViewModel{
+                Message = message,
+                RequestId = Activity.Current?.Id
+              };
+              return viewModel;
     }
 }

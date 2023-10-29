@@ -1,5 +1,6 @@
 using System.Collections;
 using LojaWeb.Models;
+using LojaWeb.Models.ViewModels;
 
 namespace LojaWeb.Services.Interfaces;
 
@@ -13,4 +14,5 @@ public interface IVendedorService
 
      void Update(Vendedor vendedor);
 
+    ErrorViewModel Error(string message);
 }

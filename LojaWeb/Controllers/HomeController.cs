@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using LojaWeb.Models;
-
+using LojaWeb.Models.ViewModels;
 namespace LojaWeb.Controllers;
 
 public class HomeController : Controller

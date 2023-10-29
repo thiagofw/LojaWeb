@@ -1,7 +1,8 @@
-﻿@model ErrorViewModel
+﻿@model LojaWeb.Models.ViewModels.ErrorViewModel
 @{
     ViewData["Title"] = "Error";
 }
+
 
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
@@ -11,6 +12,10 @@
     <p>
         <strong>Request ID:</strong> <code>@Model.RequestId</code>
     </p>
+     <p>
+        <strong>Request ID:</strong> <code>@Model.Message</code>
+    </p>
+}
 }
 
 <h3>Development Mode</h3>
